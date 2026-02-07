@@ -1,4 +1,4 @@
-## Project Title
+## Side Quest Week 4
 
 GBDA302 Week 4 Example 5: Blob Platformer (JSON + Classes)
 
@@ -7,6 +7,8 @@ GBDA302 Week 4 Example 5: Blob Platformer (JSON + Classes)
 ## Authors
 
 Karen Cochrane and David Han
+
+Edited by Angela Lin / 21084451 / a232lin
 
 ---
 
