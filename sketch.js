@@ -26,6 +26,33 @@ function preload() {
   data = loadJSON("levels.json");
 }
 
+class Rock {
+  constructor(platform) {
+    // Place rock on top center of the platform
+    this.x = platform.x + platform.w / 2;
+    this.y = platform.y - 10; // slightly above platform
+    this.size = 20;
+  }
+
+  draw() {
+    fill(150); // grey
+    rectMode(CENTER);
+    rect(this.x, this.y, this.size, this.size);
+    rectMode(CORNER); // reset so platforms stay normal
+  }
+
+  // Check collision with blob
+  checkCollision(blob) {
+    const dx = Math.abs(blob.x - this.x);
+    const dy = Math.abs(blob.y - this.y);
+    if (dx < blob.r && dy < blob.r) {
+      // blob touched rock → send back to level start
+      return true;
+    }
+    return false;
+  }
+}
+
 function setup() {
   // Create the player once (it will be respawned per level).
   player = new BlobPlayer();
@@ -40,19 +67,25 @@ function setup() {
 }
 
 function draw() {
-  // 1) Draw the world (background + platforms)
+  // 1) Draw the world (platforms + rocks)
   world.drawWorld();
 
-  // 2) Update and draw the player on top of the world
+  // 2) Update the player
   player.update(world.platforms);
   player.draw(world.theme.blob);
 
-  // --- 2a) Check if player reached the end of the last platform ---
+  // 3) Check collision with rocks — THIS IS WHERE YOU PUT IT
+  for (const rock of world.rocks) {
+    if (rock.checkCollision(player)) {
+      player.spawnFromLevel(world); // send blob back to start
+    }
+  }
+
+  // 4) Check if player reached the end of last platform
   const lastPlatform = world.platforms[world.platforms.length - 1];
-  const goalX = lastPlatform.x + lastPlatform.w; // right edge
+  const goalX = lastPlatform.x + lastPlatform.w;
   if (player.x > goalX && player.onGround) {
-    // player reached the end while on the platform
-    const next = (levelIndex + 1) % data.levels.length; // next level, wrap around
+    const next = (levelIndex + 1) % data.levels.length; // next level
     loadLevel(next);
   }
 

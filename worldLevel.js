@@ -50,6 +50,13 @@ class WorldLevel {
 
     // Convert raw platform objects into Platform instances.
     this.platforms = (levelJson.platforms || []).map((p) => new Platform(p));
+    this.rocks = [];
+    if (levelJson.rocks) {
+      for (const r of levelJson.rocks) {
+        const plat = this.platforms[r.platformIndex];
+        if (plat) this.rocks.push(new Rock(plat));
+      }
+    }
   }
 
   /*
@@ -74,6 +81,8 @@ class WorldLevel {
     background(color(this.theme.bg));
     for (const p of this.platforms) {
       p.draw(color(this.theme.platform));
+      // --- Draw rocks ---
+      for (const r of this.rocks) r.draw();
     }
   }
 }
