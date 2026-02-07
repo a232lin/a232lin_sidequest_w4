@@ -192,6 +192,58 @@ class BlobPlayer {
     }
 
     endShape(CLOSE);
+    // --- TEETH (on top of body) ---
+    fill(255);
+    rectMode(CENTER);
+
+    let toothW = this.r * 0.25;
+    let toothH = this.r * 0.35;
+
+    rect(this.x - toothW * 0.6, this.y + this.r * 0.2, toothW, toothH, 2);
+    rect(this.x + toothW * 0.6, this.y + this.r * 0.2, toothW, toothH, 2);
+
+    rectMode(CORNER);
+
+    // --- EYES ---
+    fill(0);
+
+    let eyeSize = this.r * 0.25;
+
+    // left eye
+    ellipse(this.x - this.r * 0.35, this.y - this.r * 0.2, eyeSize);
+
+    // right eye
+    ellipse(this.x + this.r * 0.35, this.y - this.r * 0.2, eyeSize);
+    fill(255);
+
+    // --- WHISKERS ---
+    stroke(0);
+    strokeWeight(1);
+
+    let whiskerY = this.y + this.r * 0.05;
+    let whiskerLength = this.r * 0.9;
+
+    // left whiskers
+    line(this.x - this.r * 0.3, whiskerY, this.x - whiskerLength, whiskerY - 5);
+    line(this.x - this.r * 0.3, whiskerY, this.x - whiskerLength, whiskerY);
+    line(this.x - this.r * 0.3, whiskerY, this.x - whiskerLength, whiskerY + 5);
+
+    // right whiskers
+    line(this.x + this.r * 0.3, whiskerY, this.x + whiskerLength, whiskerY - 5);
+    line(this.x + this.r * 0.3, whiskerY, this.x + whiskerLength, whiskerY);
+    line(this.x + this.r * 0.3, whiskerY, this.x + whiskerLength, whiskerY + 5);
+
+    noStroke(); // reset so outline doesn't affect blob
+    // --- EARS ---
+    fill(color(colourHex));
+
+    let earSize = this.r * 0.8;
+
+    // left ear
+    ellipse(this.x - this.r * 0.6, this.y - this.r * 0.9, earSize);
+
+    // right ear
+    ellipse(this.x + this.r * 0.6, this.y - this.r * 0.9, earSize);
   }
 }
 

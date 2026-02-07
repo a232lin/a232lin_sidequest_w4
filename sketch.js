@@ -47,8 +47,17 @@ function draw() {
   player.update(world.platforms);
   player.draw(world.theme.blob);
 
+  // --- 2a) Check if player reached the end of the last platform ---
+  const lastPlatform = world.platforms[world.platforms.length - 1];
+  const goalX = lastPlatform.x + lastPlatform.w; // right edge
+  if (player.x > goalX && player.onGround) {
+    // player reached the end while on the platform
+    const next = (levelIndex + 1) % data.levels.length; // next level, wrap around
+    loadLevel(next);
+  }
+
   // 3) HUD
-  fill(0);
+  fill("white");
   text(world.name, 10, 18);
   text("Move: A/D or ←/→ • Jump: Space/W/↑ • Next: N", 10, 36);
 }
