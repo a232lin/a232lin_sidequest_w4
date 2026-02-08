@@ -17,7 +17,7 @@
       ]
     },
     {
-      "name": "Gopher Underground LVL 2: avoid the grey rocks...",
+      "name": "Gopher Underground LVL 2: avoid the spikes...",
       "gravity": 0.65,
       "jumpV": -11.0,
       "theme": { "bg": "#C7ADA3", "platform": "#8C6757", "blob": "#cd9e77" },
