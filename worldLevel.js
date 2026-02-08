@@ -78,11 +78,27 @@ class WorldLevel {
   The player draws itself separately, after the world is drawn.
   */
   drawWorld() {
+    // 1) Background
     background(color(this.theme.bg));
+
+    // 2) Dirt lines ONLY for level 1
+    if (levelIndex === 0) {
+      stroke("#4b2f1f"); // dark brown
+      strokeWeight(2);
+      for (let y = 0; y < height; y += 20) {
+        line(0, y + random(-5, 5), width, y + random(-5, 5));
+      }
+      noStroke();
+    }
+
+    // 3) Draw platforms
     for (const p of this.platforms) {
       p.draw(color(this.theme.platform));
-      // --- Draw rocks ---
-      for (const r of this.rocks) r.draw();
+    }
+
+    // 4) Draw rocks on top of platforms
+    for (const r of this.rocks) {
+      r.draw();
     }
   }
 }

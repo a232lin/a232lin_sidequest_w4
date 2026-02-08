@@ -2,33 +2,37 @@
   "schemaVersion": 1,
   "levels": [
     {
-      "name": "Gopher Underground LVL 1",
+      "name": "Gopher Underground LVL 1: jump on the platforms...",
       "gravity": 0.65,
       "jumpV": -11.0,
       "theme": { "bg": "#613a26", "platform": "#8bc44f", "blob": "#cd9e77" },
       "start": { "x": 80, "y": 220, "r": 26 },
+      "goalPlatformIndex": 3,
       "platforms": [
-        { "x": 0, "y": 324, "w": 640, "h": 36 },
-        { "x": 120, "y": 254, "w": 120, "h": 12 },
+        { "x": 0, "y": 324, "w": 370, "h": 36 },
+        { "x": 120, "y": 254, "w": 99, "h": 12 },
         { "x": 300, "y": 204, "w": 90, "h": 12 },
-        { "x": 440, "y": 144, "w": 130, "h": 12 },
+        { "x": 440, "y": 144, "w": 110, "h": 12 },
         { "x": 520, "y": 254, "w": 90, "h": 12 }
       ]
     },
     {
-      "name": "Gopher Underground LVL 2",
+      "name": "Gopher Underground LVL 2: avoid the grey rocks...",
       "gravity": 0.65,
       "jumpV": -11.0,
-      "theme": { "bg": "#333333", "platform": "#8bc44f", "blob": "#cd9e77" },
+      "theme": { "bg": "#C7ADA3", "platform": "#8C6757", "blob": "#cd9e77" },
       "start": { "x": 80, "y": 220, "r": 26 },
       "platforms": [
-        { "x": 0, "y": 250, "w": 120, "h": 36 },
-        { "x": 140, "y": 254, "w": 120, "h": 12 },
-        { "x": 280, "y": 204, "w": 120, "h": 12 },
-        { "x": 420, "y": 144, "w": 120, "h": 12 },
-        { "x": 560, "y": 84, "w": 120, "h": 12 }
+        { "x": 10, "y": 324, "w": 100, "h": 5 },
+        { "x": 140, "y": 254, "w": 150, "h": 50 },
+        { "x": 280, "y": 204, "w": 70, "h": 12 },
+        { "x": 420, "y": 144, "w": 140, "h": 12 },
+        { "x": 560, "y": 84, "w": 100, "h": 9 }
       ],
-      "rocks": [{ "platformIndex": 1 }, { "platformIndex": 3 }]
+      "rocks": [
+        { "platformIndex": 1, "offsetX": -20, "offsetY": -12 },
+        { "platformIndex": 3, "offsetX": 30 }
+      ]
     }
   ]
 }

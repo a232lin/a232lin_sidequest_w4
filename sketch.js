@@ -31,14 +31,20 @@ class Rock {
     // Place rock on top center of the platform
     this.x = platform.x + platform.w / 2;
     this.y = platform.y - 10; // slightly above platform
-    this.size = 20;
+    this.size = 20; // controls width/height of fire
   }
 
   draw() {
-    fill(150); // grey
-    rectMode(CENTER);
-    rect(this.x, this.y, this.size, this.size);
-    rectMode(CORNER); // reset so platforms stay normal
+    fill("#ff3b3b"); // fire colour
+    noStroke();
+    beginShape();
+    // Draw a simple flame shape using 5 points
+    vertex(this.x, this.y - this.size); // top point
+    vertex(this.x - this.size * 0.5, this.y); // bottom left
+    vertex(this.x - this.size * 0.2, this.y * 0.9 + this.size * 0.2);
+    vertex(this.x + this.size * 0.2, this.y * 0.9 + this.size * 0.2);
+    vertex(this.x + this.size * 0.5, this.y); // bottom right
+    endShape(CLOSE);
   }
 
   // Check collision with blob
@@ -67,44 +73,53 @@ function setup() {
 }
 
 function draw() {
-  // 1) Draw the world (platforms + rocks)
+  // 1) Draw the world (background + platforms)
   world.drawWorld();
 
-  // 2) Update the player
+  // 2) Update and draw the player
   player.update(world.platforms);
   player.draw(world.theme.blob);
 
-  // 3) Check collision with rocks — THIS IS WHERE YOU PUT IT
+  // --- 2a) Check if blob fell off screen ---
+  if (player.y - player.r > height) {
+    loadLevel(0); // send back to level 1
+  }
+
+  // --- 2b) Check collision with rocks ---
   for (const rock of world.rocks) {
     if (rock.checkCollision(player)) {
-      player.spawnFromLevel(world); // send blob back to start
+      player.spawnFromLevel(world); // reset current level
     }
   }
 
-  // 4) Check if player reached the end of last platform
-  const lastPlatform = world.platforms[world.platforms.length - 1];
-  const goalX = lastPlatform.x + lastPlatform.w;
-  if (player.x > goalX && player.onGround) {
-    const next = (levelIndex + 1) % data.levels.length; // next level
+  // --- 3) Check if player reached the goal platform ← PUT THE CODE HERE ---
+  const goalIndex = world.goalPlatformIndex ?? world.platforms.length - 1;
+  const goalPlatform = world.platforms[goalIndex];
+
+  // Horizontal check
+  const onGoalX = player.x + player.r >= width;
+
+  // Vertical check (allows blob slightly above platform)
+  const onGoalY =
+    player.y + player.r >= goalPlatform.y - 300 &&
+    player.y - player.r <= goalPlatform.y + goalPlatform.h;
+
+  // Advance level if on goal platform
+  if (onGoalX && onGoalY) {
+    const next = (levelIndex + 1) % data.levels.length;
     loadLevel(next);
   }
 
-  // 3) HUD
+  // 4) HUD
   fill("white");
   text(world.name, 10, 18);
-  text("Move: A/D or ←/→ • Jump: Space/W/↑ • Next: N", 10, 36);
+  text("Move: A/D or ←/→ • Jump: Space/W/↑", 10, 36);
 }
 
 function keyPressed() {
   // Jump keys
   if (key === " " || key === "W" || key === "w" || keyCode === UP_ARROW) {
     player.jump();
-  }
-
-  // Optional: cycle levels with N (as with the earlier examples)
-  if (key === "n" || key === "N") {
-    const next = (levelIndex + 1) % data.levels.length;
-    loadLevel(next);
   }
 }
 
